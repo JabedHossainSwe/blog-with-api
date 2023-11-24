@@ -23,19 +23,16 @@ class PostController extends Controller
 
     public function create()
     {
-        // Show the form for creating a new post
         return view('posts.create');
     }
 
     public function store(Request $request)
     {
-        // Validate the request data (customize this based on your requirements)
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
 
-        // Exclude the _token field from the request data
         $data = $request->except('_token');
 
         Post::create($data);
@@ -78,4 +75,18 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
 
+    public function show($id)
+    {
+
+        $post = Post::find($id);
+
+        if (!$post) {
+
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
+
+        return view('posts.show', compact('post'));
+    }
 }
+
+
