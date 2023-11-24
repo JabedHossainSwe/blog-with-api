@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -28,9 +28,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -41,22 +41,30 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">Login</a>
+                            </li>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                                <li class="nav-item">
+                                    <a href="{{ route('register') }}" class="nav-link">Register</a>
+                                </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.create') }}">Create Post</a>
+                            </li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); this.closest('form').submit();"
-                                    class="ml-4 text-sm text-gray-700 underline">
+                                    onclick="event.preventDefault(); this.closest('form').submit();" class="nav-link">
                                     Logout
                                 </a>
                             </form>
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -66,6 +74,7 @@
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
 </body>
 

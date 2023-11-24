@@ -1,15 +1,16 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
+@section('content')
+    <h1>Dashboard</h1>
+
+    @if($posts && $posts->count() > 0)
+        @foreach ($posts as $post)
+            <div>
+                <h2>{{ $post->title }}</h2>
+                <p>{{ $post->content }}</p>
             </div>
-        </div>
-    </div>
-</x-app-layout>
+        @endforeach
+    @else
+        <p>No posts available.</p>
+    @endif
+@endsection

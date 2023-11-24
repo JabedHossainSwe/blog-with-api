@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     protected $post;
@@ -14,11 +14,11 @@ class PostController extends Controller
     {
         $this->post = $post;
     }
-    public function index()
+    public function dashboard()
     {
-        $posts = $this->post->all();
+        $posts = Auth::user()->posts;
 
-        return view('posts.index', compact('posts'));
+        return view('dashboard', compact('posts'));
     }
 
     public function create()
@@ -27,19 +27,19 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+    ]);
 
-        $data = $request->except('_token');
+    $post = Auth::user()->posts()->create([
+        'title' => $request->input('title'),
+        'content' => $request->input('content'),
+    ]);
 
-        Post::create($data);
-
-        return redirect()->route('posts.index')->with('success', 'Post created successfully');
-    }
-
+    return redirect()->route('dashboard')->with('success', 'Post created successfully');
+}
 
 
     public function edit(Post $post)
