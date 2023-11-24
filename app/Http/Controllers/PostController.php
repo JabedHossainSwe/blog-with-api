@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-
+use Illuminate\Validation\Rule;
 class PostController extends Controller
 {
     protected $post;
@@ -46,17 +46,28 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        // Show the form for editing a specific post
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
-        // Update the specified post in the database
-        // Validate request, update post, etc.
-        $post->update($request->all());
+        $request->validate([
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('posts')->ignore($post->id),
+            ],
+            'content' => 'required|string',
+        ]);
 
-        return redirect()->route('posts.index');
+
+        $post->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully');
     }
 
     public function destroy(Post $post)
