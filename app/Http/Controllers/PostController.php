@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Validation\Rule;
+
 class PostController extends Controller
 {
     protected $post;
@@ -72,9 +73,9 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        // Remove the specified post from the database
         $post->delete();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
+
 }
