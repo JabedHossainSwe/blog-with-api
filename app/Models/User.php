@@ -61,4 +61,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    public function hasRole($roles)
+    {
+        return in_array($this->role, $roles);
+    }
+
 }

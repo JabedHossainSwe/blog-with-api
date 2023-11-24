@@ -53,18 +53,23 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('posts.create') }}">Create Post</a>
-                            </li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); this.closest('form').submit();" class="nav-link">
-                                    Logout
-                                </a>
-                            </form>
-                            </li>
+                            <div>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('posts.create') }}">Create Post</a>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="nav-item">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); this.closest('form').submit();"
+                                            class="nav-link">
+                                            Logout
+                                        </a>
+                                    </form>
+                                </li>
+                            </div>
                         @endguest
                     </ul>
                 </div>
