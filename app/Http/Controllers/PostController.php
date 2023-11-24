@@ -7,15 +7,17 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    protected $post;
+
+    public function __construct(Post $post)
+    {
+        $this->post = $post;
+    }
     public function index()
     {
-        // Instead of using static access, create an instance of the Post model
-        $posts = new Post();
+        $posts = $this->post->all();
 
-        // Now you can use $posts to fetch data or perform other operations
-        $data = $posts->someMethod(); // Replace with the actual method you want to call
-
-        return view('posts.index', compact('data'));
+        return view('posts.index', compact('posts'));
     }
 
     public function create()
