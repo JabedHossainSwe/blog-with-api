@@ -19,10 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::middleware([CheckRole::class . ':admin'])->group(function () {
-  
-    Route::get('/admin-dashboard', function () {
-        return 'Welcome to the admin dashboard!';
-    });
+Route::middleware(['role:user'])->group(function () {
+    Route::get('/posts/{post}/edit', 'PostController@edit')->middleware('role:user');
+    Route::put('/posts/{post}', 'PostController@update')->middleware('role:user');
+});
+Route::middleware(['role:admin'])->group(function () {
+    Route::get('/admin/posts', 'AdminController@managePosts')->middleware('role:admin');
 });

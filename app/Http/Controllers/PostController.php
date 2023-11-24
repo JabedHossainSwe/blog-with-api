@@ -12,6 +12,7 @@ class PostController extends Controller
 
     public function __construct(Post $post)
     {
+        $this->middleware('role:admin')->except(['index', 'show']);
         $this->post = $post;
     }
     public function dashboard()
